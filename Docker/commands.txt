@@ -1,0 +1,74 @@
+To install Docker -- https://docs.docker.com/engine/install/ubuntu/
+
+
+docker pull jenkins/jenkins:lts-jdk11
+
+cloud techblr
+
+
+
+docker run -p 8090:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts-jdk11
+
+
+
+Jenkins 
+
+ 
+
+p/w : 8844ed7f45de42de9a2726a0ed92426f
+
+ 
+
+path: This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
+
+
+--------------------------------
+
+FROM httpd:2.4 
+COPY ./website/ /usr/local/apache2/htdocs/
+
+
+
+mkdir website
+
+
+
+sudo docker build -t my-apache2 .
+sudo docker image ls
+sudo docker run -d --name httpd-docker-01 -p 80:80 my-apache2
+sudo docker ps
+
+sudo docker run -d --name tjsv -p 8090:8080 jenkins/jenkins
+
+
+
+2/8/2023
+
+1.sudo docker tag my-image username/my-repo
+    2.sudo push username/my-repo 
+    3.sudo docker images
+    4.sudo docker image ls
+    5.sudo docker export --output="myimage.tar"  f6b2b0057523
+    6.sudo docker import /home/myimage.tgz
+
+
+
+
+3/4/2023
+
+
+1.sudo docker tag my-image username/my-repo
+    2.sudo push username/my-repo 
+    3.sudo docker images
+    4.sudo docker image ls
+    5.sudo docker export --output="myimage.tar"  f6b2b0057523
+    6.sudo docker import /home/myimage.tgz
+
+
+
+Compose
+https://github.com/docker/awesome-compose/tree/master/official-documentation-samples/wordpress/
+
+
+https://docs.docker.com/compose/gettingstarted/
+

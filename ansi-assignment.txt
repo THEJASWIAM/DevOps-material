@@ -1,0 +1,48 @@
+Ansible assignments: 
+
+Copy module 
+
+1) copy the file from /home/ubuntu/example6.txt /home/ubuntu/test8/example6.txt 
+
+2) Shell module  ( file ex: sample.txt ) 
+
+2.1) find the file which modified 4 months back & delete that 
+
+2.2) change the permission of a dir to 755
+
+2.3) find out the mutiple patterns in a file ( for ex: cricket, football, Tennis ) 
+
+2.4) find out the characters in 75th line of a file 
+
+2.5) find out the disk free of a file sample.txt 
+
+2.6) sort the file & find out only unique words in the sample.txt file 
+
+2.7) create one softlink for a file 
+
+2.8) Display the content of a sample.txt file & redirect to log file 
+
+2.9) find out all non-empty files & append to test8.txt file 
+
+2.10) move the file to /home/ubuntu/test3.txt /home/ubuntu/test8/test3.txt 
+
+3) Create one directory ( dir name: sample5 ) using file module 
+
+4) Create one file ( file name: test9.txt ) using file module 
+
+5) Find out the all txt files in path: /home/ubuntu/sample5 
+
+6) Display the content of a file in path: /home/ubuntu/test5/sample6.txt 
+use args , chdir argument & write playbook 
+
+7)  Create one file ( file name: example3.txt ) using file module & add ignore_errors for that task 
+
+8) Check the xml files count & then register ( path: /home/ubuntu/sample4) 
+condition 1: if xml count != 0 then copy the xml files from /home/ubuntu/sample4/*.xml /home/ubuntu/sample7)
+condition 2: if xml count == 0 then create a new dir (path: /home/ubuntu/dir6)
+
+9) Check the txt files count & then register ( path: /home/ubuntu/dir3) 
+condition 1: if txt count != 0 then copy the txt files from /home/ubuntu/dir3/*.txt /home/ubuntu/dir6)
+condition 2: if txt count == 0 then create a new file (path: /home/ubuntu/test7.zip) 
+
+10) Find out the all zip files in path: /home/ubuntu/dir4

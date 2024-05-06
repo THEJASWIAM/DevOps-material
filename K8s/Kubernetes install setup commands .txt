@@ -1,0 +1,160 @@
+kubernetes install setup commands : 
+
+Pre-requisites: 
+
+Select ubuntu:20.0 version as default for both master & worker node 
+
+master: t2.medium(2 CPUs & 2GB Memory)
+worker: t2.micro
+
+open below ports in security group:
+Master node: 6443, 32750, 10250, 4443, 443, 8080
+worker node: 179 
+
+Master Node: 
+    1  yum install -y -q yum-utils device-mapper-persistent-data lvm2 > /dev/null 2>&1
+    2  yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo > /dev/null 2>&1
+    3  yum install -y -q docker-ce >/dev/null 2>&1
+	
+	
+    4  systemctl enable docker
+    5  sudo apt-get update
+    6  clear
+    7  apt-get install -y apt-transport-https
+    8  apt install docker.io
+    9  sudo systemctl start docker
+   10  sudo systemctl enable docker
+   11  apt-get install curl
+   12  curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg| sudo apt-key add
+   13  clear
+   14  ll
+   15  chmod 777 /etc/apt/sources.list.d/
+   16  cd /etc/apt/sources.list.d/
+   17  ll
+   18  vi kubernetes.list
+       content: deb https://apt.kubernetes.io/ kubernetes-xenial main
+   19  ll
+   20  cat kubernetes.list
+   21  apt-get update
+   22  clear
+   23  cd
+   24  pwd
+   25  apt-get install -y kubelet kubeadm kubectl kubernetes-cni
+   26  ll
+   27  clear
+   28  swapoff -a
+   29  kubeadm init
+   30  mkdir -p $HOME/.kube
+   31  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+   32  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+   33  ll
+   34  clear
+   35  ll
+   36  history
+   37  ll
+   38  kubectl get nodes
+   39  curl https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml -O
+   40  clear
+   41  ll
+   42  kubectl apply -f calico.yaml
+   43  clear
+   44  ll
+   45  clear
+   46  ll
+   47  kubectl get nodes
+   48  history
+
+
+
+Worker Node: 
+
+    1  apt-get update
+    2  clear
+    3  apt-get install -y apt-transport-https
+    4  apt install docker.io
+    5  systemctl start docker
+    6  systemctl enable docker
+    7  apt-get install curl
+    8  clear
+    9  curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg| sudo apt-key add
+   10  chmod 777 /etc/apt/sources.list.d/
+   11  cd /etc/apt/sources.list.d/
+   12  ll
+   13  vi kubernetes.list
+       content: deb https://apt.kubernetes.io/ kubernetes-xenial main
+   14  cat kubernetes.list
+   15  cd
+   16  apt-get update
+   17  apt-get install -y kubelet kubeadm kubectl kubernetes-cni
+   18  clear
+   19  ll
+   20  swapoff -a
+   21  kubeadm join 172.31.13.163:6443 --token 34n4ut.p7qdt7uervtxwlfj         --discovery-token-ca-cert-hash sha256:82b50ad07f8eaf11ad619fda322cf7f9d6413df73b6ce491b4f60fab8ca2efd0
+   
+Step1: 
+create the below script both in master node & worker node 
+   
+vi master.sh
+
+Both in master node & worker node 
+
+-------------------------------------------------------------------------------------
+#!/bin/bash  
+
+systemctl enable docker
+sudo apt-get update
+apt-get install -y apt-transport-https
+apt install docker.io
+sudo systemctl start docker
+sudo systemctl enable docker
+apt-get install curl
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg| sudo apt-key add
+chmod 777 /etc/apt/sources.list.d/
+--------------------------------------------------------------------------------
+
+pass full permission to that file 
+
+sudo chmod 777 master.sh 
+
+To run the script:
+sh master.sh or ./master.sh 
+
+step2: Run the below commands in both master & woker node 
+
+cd /etc/apt/sources.list.d/
+vi kubernetes.list
+deb https://apt.kubernetes.io/ kubernetes-xenial main
+apt-get update
+apt-get install -y kubelet kubeadm kubectl kubernetes-cni
+ 
+step3: only in master node 
+master node: 
+
+kubeadm init
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+curl https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml -O
+kubectl apply -f calico.yaml
+
+step4: only in worker node 
+worker node: 
+
+
+
+step5: only in master node ( final step ) 
+master node: 
+
+kubectl get nodes
+
+
+16.16.198.154 ---> worker 
+13.50.111.127 ---> master 
+
+		
+
+
+
+kubeadm join 172.31.14.203:6443 --token 086uru.0u34ob8uoccd4pc9 \
+	--discovery-token-ca-cert-hash sha256:c51173a2a3cbcaed6dd03c54c16c9be7ac016f163dfbe0f80f0d7d1c478a65a9
+ 
