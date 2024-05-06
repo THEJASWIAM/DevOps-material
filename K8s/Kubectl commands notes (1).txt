@@ -1,0 +1,154 @@
+Kubectl commands : 
+
+
+List the available resources 
+
+kubectl get nodes 
+kubectl get pods
+kubectl get deployment
+kubectl get services/svc
+kubectl get replicaset 
+kubectl get pod -o wide ---> to get full info about pods 
+
+Create the resources 
+
+kubectl create deployment <NAME of deployment> --image=<NAME of the image>
+for ex: 
+kubectl create deployment nginx-depl --image=nginx
+kubectl create deployment mongo-depl --image=mongo
+kubectl create service nodeport nginx --tcp=80:80
+
+Edit commands 
+
+kubectl edit deployment <NAME of deployment> 
+( change nginx image version: 1.16 ) 
+
+kubectl logs <pod name> ---> to check the logs off the pod 
+kubectl describe pod <pod name> ---> To get all the details about the pod 
+kubectl exec -it <pod name> -- bin/bash 
+
+Delete commands: 
+
+kubectl delete deployment [name] 
+kubectl apply -f <name of the file> 
+kubectl delete -f <name of the file>
+
+kubectl create -f deploy.yml 
+
+
+vi deploy.yml 
+
+---------------------
+apiversion: apps/v1 -- version
+kind: deployment. -- deployment / service
+metadata: 
+  name: nginx-deployment -- name of the deployment
+  Labels:
+    app: nginx.  -- to connect service and deployment
+
+spec: ---> specfication for deployment 
+  replicas: 3.  - creat 3 pods 
+  selector: 
+    matchLabels: 
+	  app: nginx 
+  template:    -- spec for pods 
+    metadata: 
+	  labels: 
+	    app: nginx 
+	spec: ---> specification for container 
+	  containers:
+	  - name: nginx
+	    image: nginx:1.7.9
+		ports: 
+		- containerPort: 8080
+		
+kubectl create service nodeport nginx --tcp=80:80 [ To create a new service in node ]  ( kmaster )
+
+mongodb-service 
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: mongodb-service 
+spec: 
+  selector: 
+    app: mongodb
+  ports: 
+    - protocol: TCP 
+	  port: 27017
+	  targetPort: 27017
+	
+nginx-service 	
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: nginx-service 
+spec: 
+  selector: 
+    app: nginx
+  ports: 
+    - protocol: TCP 
+	  port: 80
+	  targetPort: 8080
+
+kubectl get deployment <depl name> -o yaml > nginx-deployment-result.yaml [ To get full status of the pods ] 
+
+
+
+
+
+
+
+
+   26  kubectl get nodes
+   27  kubectl get pods
+   28  kubectl create deployment nginx1 --image=nginx
+   29  kubectl get pods
+   30  kubectl get replicas
+   31  kubectl get replicaset
+   32  kubectl get deployment
+   33  kubectl create -f deploy.yml
+   34  vi deploy.yml
+   35  kubectl get deployment
+   36  kubectl delete deployment nginx1
+   37  kubectl get deployment
+   38  kubectl apply -f deploy.yml
+   39  vi deploy.yml
+   40  kubectl apply -f deploy.yml
+   41  vi deploy.yml
+   42  kubectl apply -f deploy.yml
+   43  vi deploy.yml
+   44  kubectl get services
+   45  ll
+   46  vi deploy.yml
+   47  kubectl apply -f deploy.yml
+   48  vi deploy.yml
+   49  kubectl get deployment
+   50  kubectl apply -f deploy.yml
+   51  vi deploy.yml
+   52  kubectl apply -f deploy.yml
+   53  vi deploy.yml
+   54  kubectl apply -f deploy.yml
+   55  vi deploy.yml
+   56  kubectl apply -f deploy.yml
+   57  vi deploy.yml
+   58  kubectl apply -f deploy.yml
+   59  vi deploy.yml
+   60  kubectl apply -f deploy.yml
+   61  vi deploy.yml
+   62  kubectl apply -f deploy.yml
+   63  vi deploy.yml
+   64  kubectl apply -f deploy.yml
+   65  vi deploy.yml
+   66  kubectl apply -f deploy.yml
+   67  vi deploy.yml
+   68  kubectl apply -f deploy.yml
+   69  vi deploy.yml
+   70  kubectl apply -f deploy.yml
+   71  kubectl get deployment
+   72  kubectl get pods
+   73  kubectl get deployment
+   74  vi deploy.yml
+   75  ll
+   76  history

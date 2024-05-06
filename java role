@@ -1,0 +1,29 @@
+java role 
+   --->  vars 
+           - main.yml 
+		 tests 
+		   - test.yml
+		 defaults 
+		   - main.yml [ # default file for java ] 
+		 tasks 
+		    - main.yml  ( 2 )  
+	     meta 
+		   - main.yml  ( 1 ) [ oracle, apache ] 
+		 handlers 
+		   - main.yml 
+		 files
+           - test1.sh
+           - sample.bat		   
+		 template 
+		   - test1.j2 
+		   - test5.j2 
+		   
+		   
+appserver : 10.234.56.76 
+db server 10.234.67.43 
+
+appserver : 
+    inculde_roles: 
+	       - java
+		   - jboss
+		   - wildfly
